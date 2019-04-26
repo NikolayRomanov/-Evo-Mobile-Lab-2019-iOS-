@@ -11,7 +11,8 @@ import UIKit
 class CreateAndDetailNoteVC: UIViewController {
     
     var note = Note()
-    var showCreateOrDetailNote = false
+    var showSaveNote = false
+    var showEditNote = false
     var detailNote = String()
     
     @IBOutlet weak var textViewNote: UITextView!
@@ -21,15 +22,24 @@ class CreateAndDetailNoteVC: UIViewController {
         super.viewDidLoad()
         //createBarButtonSave()
         definitionVC()
-        print("showCreateOrDetailNote", showCreateOrDetailNote)
-        print("detailNote", note)
-        print("count note", arrayNotes.count)
+        //print("showSaveNote", showSaveNote)
+        //print("showEditNote", showEditNote)
+        //print("detailNote", note)
+        //print("count note", arrayNotes.count)
         // Do any additional setup after loading the view.
     }
     
     func definitionVC() {
-        if showCreateOrDetailNote {
+        if showEditNote {
+            createBarButtonEdit()
+            textViewNote.text = note.note
+            print("showEditNote")
+            print("showEditNote", note.note)
+        }
+        if showSaveNote {
             createBarButtonSave()
+            textViewNote.text = "Write pls text..."
+            print("showSaveNote")
         }
         else {
             textViewNote.text = detailNote
@@ -42,6 +52,14 @@ class CreateAndDetailNoteVC: UIViewController {
                                            target: self,
                                            action: #selector(barButtonItemSave))
         navigationItemNote.rightBarButtonItem = saveButton
+    }
+    
+    func createBarButtonEdit() {
+        let editButton = UIBarButtonItem(title: "Редактировать",
+                                         style: .plain,
+                                         target: self,
+                                         action: #selector(barButtonItemEdit))
+        navigationItemNote.rightBarButtonItem = editButton
     }
 
     func noteDate() -> String {
@@ -69,9 +87,12 @@ class CreateAndDetailNoteVC: UIViewController {
     
     @objc func barButtonItemSave() {
         arrayNotes.append(recordObject())
-        //arrayTest.append(textViewNote.text)
         print(arrayTest.count)
         navigationItemNote.rightBarButtonItem?.title = "Готово"
         navigationItemNote.rightBarButtonItem?.isEnabled = false
+    }
+    
+    @objc func barButtonItemEdit() {
+        
     }
 }

@@ -30,7 +30,7 @@ class ViewController: UITableViewController {
         cell.labelDate.text = arrayNotes[indexPath.row].date
         cell.labelNote.text = arrayNotes[indexPath.row].note
         cell.labelTime.text = arrayNotes[indexPath.row].time
-        cell.labelUnicode.text = "стрелочка"
+        cell.labelUnicode.text = ">"
         
         //cell.textLabel?.text = arrayNotes[indexPath.row].note
         //cell.detailTextLabel?.text = arrayNotes[indexPath.row].date + "     " + arrayNotes[indexPath.row].time
@@ -38,7 +38,8 @@ class ViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100.0
+        return 85
+        //81
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -46,19 +47,37 @@ class ViewController: UITableViewController {
         performSegue(withIdentifier: "showCreateAndDetailNote", sender: note)
     }
     
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let note = arrayNotes[indexPath.row]
+        let editAction = UITableViewRowAction(style: .default, title: "Edit") { (action, indexPath) in
+            self.performSegue(withIdentifier: "showCreateAndDetailNote", sender: note)
+        }
+        let deleteAction = UITableViewRowAction(style: .default, title: "Delete") { (action, indexPath) in
+            arrayNotes.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+        editAction.backgroundColor = .blue
+        deleteAction.backgroundColor = .red
+        return [deleteAction, editAction]
+    }
+    
     @IBAction func barButtonIntemAdd(_ sender: Any) {
-        let showCreateNote = true
-        performSegue(withIdentifier: "showCreateAndDetailNote", sender: showCreateNote)
+        let showSaveNote = true
+        performSegue(withIdentifier: "showCreateAndDetailNote", sender: showSaveNote)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showCreateAndDetailNote" {
             if let showCreateAndDetailNoteVC = segue.destination as? CreateAndDetailNoteVC {
-                if let sendershowCreateNote = sender as? Bool {
-                    showCreateAndDetailNoteVC.showCreateOrDetailNote = sendershowCreateNote
+                if let senderShowSaveNote = sender as? Bool {
+                    showCreateAndDetailNoteVC.showSaveNote = senderShowSaveNote
                 }
-                if let sendershowDetailNote = sender as? String {
-                    showCreateAndDetailNoteVC.detailNote = sendershowDetailNote
+                if let senderShowDetailNote = sender as? String {
+                    showCreateAndDetailNoteVC.detailNote = senderShowDetailNote
+                }
+                if let senderShowEditNote = sender as? Note {
+                    showCreateAndDetailNoteVC.note = senderShowEditNote
+                    showCreateAndDetailNoteVC.showEditNote = true
                 }
             }
         }
