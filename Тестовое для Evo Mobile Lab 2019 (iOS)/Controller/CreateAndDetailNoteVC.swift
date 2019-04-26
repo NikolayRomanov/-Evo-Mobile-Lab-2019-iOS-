@@ -30,16 +30,15 @@ class CreateAndDetailNoteVC: UIViewController {
     }
     
     func definitionVC() {
-        if showEditNote {
-            createBarButtonEdit()
-            textViewNote.text = note.note
-            print("showEditNote")
-            print("showEditNote", note.note)
-        }
         if showSaveNote {
             createBarButtonSave()
-            textViewNote.text = "Write pls text..."
             print("showSaveNote")
+        }
+        else if showEditNote {
+            textViewNote.text = note.note
+            createBarButtonEdit()
+            print("showEditNote")
+            print("showEditNote", note.note)
         }
         else {
             textViewNote.text = detailNote
@@ -86,13 +85,19 @@ class CreateAndDetailNoteVC: UIViewController {
     }
     
     @objc func barButtonItemSave() {
-        arrayNotes.append(recordObject())
-        print(arrayTest.count)
-        navigationItemNote.rightBarButtonItem?.title = "Готово"
-        navigationItemNote.rightBarButtonItem?.isEnabled = false
+        if showSaveNote {
+            arrayNotes.append(recordObject())
+            print(arrayTest.count)
+            navigationItemNote.rightBarButtonItem?.title = "Готово"
+            navigationItemNote.rightBarButtonItem?.isEnabled = false
+        }
+        else if showEditNote {
+            note.note = textViewNote.text
+            createBarButtonEdit()
+        }
     }
     
     @objc func barButtonItemEdit() {
-        
+        createBarButtonSave()
     }
 }
