@@ -55,13 +55,21 @@
 			isa = PBXGroup;
 			children = (
 				FAC285EE2273022D008B74C6 /* AppDelegate.swift */,
-				FAC285F02273022D008B74C6 /* ViewController.swift */,
+				FAC286002273028D008B74C6 /* Controller */,
 				FAC285F22273022D008B74C6 /* Main.storyboard */,
 				FAC285F52273022F008B74C6 /* Assets.xcassets */,
 				FAC285F72273022F008B74C6 /* LaunchScreen.storyboard */,
 				FAC285FA2273022F008B74C6 /* Info.plist */,
 			);
 			path = "Тестовое для Evo Mobile Lab 2019 (iOS)";
+			sourceTree = "<group>";
+		};
+		FAC286002273028D008B74C6 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				FAC285F02273022D008B74C6 /* ViewController.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
