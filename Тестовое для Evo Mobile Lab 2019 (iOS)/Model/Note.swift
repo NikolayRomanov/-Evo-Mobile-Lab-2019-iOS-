@@ -10,8 +10,8 @@ import Foundation
 
 class Note {
     var note = String()
-    var date = Data()
-    var time = Data()
+    var date = String()
+    var time = String()
 }
 
 var arrayNotes = [Note]()

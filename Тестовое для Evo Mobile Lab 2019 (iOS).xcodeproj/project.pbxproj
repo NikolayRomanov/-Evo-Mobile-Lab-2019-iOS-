@@ -14,6 +14,7 @@
 		FAC285F92273022F008B74C6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAC285F72273022F008B74C6 /* LaunchScreen.storyboard */; };
 		FAC286042273063C008B74C6 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC286032273063C008B74C6 /* Note.swift */; };
 		FAC2860822731EBB008B74C6 /* CreateAndDetailNoteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC2860722731EBB008B74C6 /* CreateAndDetailNoteVC.swift */; };
+		FAC2860B22735864008B74C6 /* NoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC2860A22735864008B74C6 /* NoteCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		FAC285FA2273022F008B74C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FAC286032273063C008B74C6 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		FAC2860722731EBB008B74C6 /* CreateAndDetailNoteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAndDetailNoteVC.swift; sourceTree = "<group>"; };
+		FAC2860A22735864008B74C6 /* NoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 			isa = PBXGroup;
 			children = (
 				FAC285EE2273022D008B74C6 /* AppDelegate.swift */,
+				FAC2860922735808008B74C6 /* View */,
 				FAC286002273028D008B74C6 /* Controller */,
 				FAC2860222730590008B74C6 /* Model */,
 				FAC285F22273022D008B74C6 /* Main.storyboard */,
@@ -84,6 +87,14 @@
 				FAC286032273063C008B74C6 /* Note.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		FAC2860922735808008B74C6 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				FAC2860A22735864008B74C6 /* NoteCell.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -157,6 +168,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAC2860B22735864008B74C6 /* NoteCell.swift in Sources */,
 				FAC2860822731EBB008B74C6 /* CreateAndDetailNoteVC.swift in Sources */,
 				FAC285F12273022D008B74C6 /* ViewController.swift in Sources */,
 				FAC285EF2273022D008B74C6 /* AppDelegate.swift in Sources */,

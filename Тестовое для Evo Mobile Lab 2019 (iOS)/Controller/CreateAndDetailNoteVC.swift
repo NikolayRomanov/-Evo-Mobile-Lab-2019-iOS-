@@ -10,6 +10,7 @@ import UIKit
 
 class CreateAndDetailNoteVC: UIViewController {
     
+    var note = Note()
     var showCreateOrDetailNote = false
     var detailNote = String()
     
@@ -21,7 +22,8 @@ class CreateAndDetailNoteVC: UIViewController {
         //createBarButtonSave()
         definitionVC()
         print("showCreateOrDetailNote", showCreateOrDetailNote)
-        print("detailNote", detailNote)
+        print("detailNote", note)
+        print("count note", arrayNotes.count)
         // Do any additional setup after loading the view.
     }
     
@@ -42,8 +44,32 @@ class CreateAndDetailNoteVC: UIViewController {
         navigationItemNote.rightBarButtonItem = saveButton
     }
 
+    func noteDate() -> String {
+        let date = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd.MM.yyyy"
+        let result = formatter.string(from: date)
+        return result
+    }
+    
+    func noteTime() -> String {
+        let date = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        let result = formatter.string(from: date)
+        return result
+    }
+    
+    func recordObject() -> Note {
+        note.date = noteDate()
+        note.time = noteTime()
+        note.note = textViewNote.text
+        return note
+    }
+    
     @objc func barButtonItemSave() {
-        arrayTest.append(textViewNote.text)
+        arrayNotes.append(recordObject())
+        //arrayTest.append(textViewNote.text)
         print(arrayTest.count)
         navigationItemNote.rightBarButtonItem?.title = "Готово"
         navigationItemNote.rightBarButtonItem?.isEnabled = false

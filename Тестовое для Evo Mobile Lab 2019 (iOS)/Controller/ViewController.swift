@@ -22,17 +22,27 @@ class ViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return arrayTest.count
+        return arrayNotes.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cellNote", for: indexPath)
-        cell.textLabel?.text = arrayTest[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "noteCell", for: indexPath) as! NoteCell
+        cell.labelDate.text = arrayNotes[indexPath.row].date
+        cell.labelNote.text = arrayNotes[indexPath.row].note
+        cell.labelTime.text = arrayNotes[indexPath.row].time
+        cell.labelUnicode.text = "стрелочка"
+        
+        //cell.textLabel?.text = arrayNotes[indexPath.row].note
+        //cell.detailTextLabel?.text = arrayNotes[indexPath.row].date + "     " + arrayNotes[indexPath.row].time
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100.0
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let note = arrayTest[indexPath.row]
+        let note = arrayNotes[indexPath.row].note
         performSegue(withIdentifier: "showCreateAndDetailNote", sender: note)
     }
     
