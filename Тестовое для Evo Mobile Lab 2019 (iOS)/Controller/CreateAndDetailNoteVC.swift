@@ -12,7 +12,7 @@ import CoreData
 class CreateAndDetailNoteVC: UIViewController {
     
     var contex: NSManagedObjectContext!
-    var note = NoteCoreData()
+    var note : NoteCoreData!
     var showSaveNote = false
     var showEditNote = false
     var detailNote = String()

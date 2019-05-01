@@ -11,13 +11,27 @@ import CoreData
 
 class ViewController: UITableViewController {
     
+    let searchController = UISearchController(searchResultsController: nil)
     var contex: NSManagedObjectContext!
-    var notes = [Note()]
     var dataNotes = [NoteCoreData()]
+    var filteredDataNotes = [NoteCoreData()]
+    var searchBarIsEmpty: Bool {
+        guard let text = searchController.searchBar.text else {return false }
+        return text.isEmpty
+    }
+    var isFiltering: Bool {
+        return searchController.isActive && !searchBarIsEmpty
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Заметки"
+        
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search"
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
         
         reloadData()
     }
@@ -66,15 +80,27 @@ class ViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if isFiltering {
+            return filteredDataNotes.count
+        }
         return dataNotes.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "noteCell", for: indexPath) as! NoteCell
         
-        cell.labelDate.text = noteDate(date: dataNotes[indexPath.row].date)
-        cell.labelNote.text = dataNotes[indexPath.row].note
-        cell.labelTime.text = noteTime(date: dataNotes[indexPath.row].time)
+        var note = NoteCoreData()
+        
+        if isFiltering {
+            note = filteredDataNotes[indexPath.row]
+        }
+        else {
+            note = dataNotes[indexPath.row]
+        }
+        
+        cell.labelDate.text = noteDate(date: note.date)
+        cell.labelNote.text = note.note
+        cell.labelTime.text = noteTime(date: note.time)
         cell.labelUnicode.text = ">"
         return cell
     }
@@ -84,17 +110,39 @@ class ViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let note = dataNotes[indexPath.row].note
+        
+        let note : String?
+        
+        if isFiltering {
+            note = filteredDataNotes[indexPath.row].note
+        }
+        else {
+            note = dataNotes[indexPath.row].note
+        }
+        
         performSegue(withIdentifier: "showCreateAndDetailNote", sender: note)
     }
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let note = dataNotes[indexPath.row]
+        let note : NoteCoreData
+        
+        if isFiltering {
+            note = filteredDataNotes[indexPath.row]
+        }
+        else {
+            note = dataNotes[indexPath.row]
+        }
         let editAction = UITableViewRowAction(style: .default, title: "Edit") { (action, indexPath) in
             self.performSegue(withIdentifier: "showCreateAndDetailNote", sender: note)
         }
         let deleteAction = UITableViewRowAction(style: .default, title: "Delete") { (action, indexPath) in
-            self.dataNotes.remove(at: indexPath.row)
+            //self.dataNotes.remove(at: indexPath.row)
+            if self.isFiltering {
+                self.filteredDataNotes.remove(at: indexPath.row)
+            }
+            else {
+                self.dataNotes.remove(at: indexPath.row)
+            }
             self.contex.delete(note)
             
             do {
@@ -132,6 +180,26 @@ class ViewController: UITableViewController {
             }
         }
     }
+    
+}
+
+extension ViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        filterContentForSearchText(searchController.searchBar.text!)
+    }
+    
+    func filterContentForSearchText( _ searchText: String) {
+        filteredDataNotes = dataNotes.filter({ note -> Bool in
+            if let noteText = note.note {
+                return noteText.contains(searchText)
+            }
+            else {
+                return false
+            }
+        })
+        reloadData()
+    }
+    
     
 }
 
