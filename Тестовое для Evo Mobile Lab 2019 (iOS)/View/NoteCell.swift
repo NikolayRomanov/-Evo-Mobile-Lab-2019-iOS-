@@ -15,6 +15,8 @@ class NoteCell: UITableViewCell {
     @IBOutlet weak var labelTime: UILabel!
     @IBOutlet weak var labelUnicode: UILabel!
     
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

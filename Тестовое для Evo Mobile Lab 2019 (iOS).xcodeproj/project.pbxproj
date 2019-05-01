@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FA47FF3C22798510003E8B2D /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA47FF3B22798510003E8B2D /* CoreDataStack.swift */; };
+		FA47FF3F22798740003E8B2D /* NoteCoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FA47FF3D2279873F003E8B2D /* NoteCoreData.xcdatamodeld */; };
 		FAC285EF2273022D008B74C6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC285EE2273022D008B74C6 /* AppDelegate.swift */; };
 		FAC285F12273022D008B74C6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC285F02273022D008B74C6 /* ViewController.swift */; };
 		FAC285F42273022D008B74C6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAC285F22273022D008B74C6 /* Main.storyboard */; };
@@ -18,6 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FA47FF3B22798510003E8B2D /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		FA47FF3E22798740003E8B2D /* Note.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Note.xcdatamodel; sourceTree = "<group>"; };
 		FAC285EB2273022D008B74C6 /* Тестовое для Evo Mobile Lab 2019 (iOS).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Тестовое для Evo Mobile Lab 2019 (iOS).app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAC285EE2273022D008B74C6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FAC285F02273022D008B74C6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -85,6 +89,8 @@
 			isa = PBXGroup;
 			children = (
 				FAC286032273063C008B74C6 /* Note.swift */,
+				FA47FF3B22798510003E8B2D /* CoreDataStack.swift */,
+				FA47FF3D2279873F003E8B2D /* NoteCoreData.xcdatamodeld */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -171,6 +177,8 @@
 				FAC2860B22735864008B74C6 /* NoteCell.swift in Sources */,
 				FAC2860822731EBB008B74C6 /* CreateAndDetailNoteVC.swift in Sources */,
 				FAC285F12273022D008B74C6 /* ViewController.swift in Sources */,
+				FA47FF3C22798510003E8B2D /* CoreDataStack.swift in Sources */,
+				FA47FF3F22798740003E8B2D /* NoteCoreData.xcdatamodeld in Sources */,
 				FAC285EF2273022D008B74C6 /* AppDelegate.swift in Sources */,
 				FAC286042273063C008B74C6 /* Note.swift in Sources */,
 			);
@@ -370,6 +378,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		FA47FF3D2279873F003E8B2D /* NoteCoreData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				FA47FF3E22798740003E8B2D /* Note.xcdatamodel */,
+			);
+			currentVersion = FA47FF3E22798740003E8B2D /* Note.xcdatamodel */;
+			path = NoteCoreData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = FAC285E32273022D008B74C6 /* Project object */;
 }

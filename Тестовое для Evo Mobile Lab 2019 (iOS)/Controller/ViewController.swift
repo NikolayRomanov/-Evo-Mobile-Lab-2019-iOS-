@@ -7,54 +7,102 @@
 //
 
 import UIKit
+import CoreData
 
 class ViewController: UITableViewController {
+    
+    var contex: NSManagedObjectContext!
+    var notes = [Note()]
+    var dataNotes = [NoteCoreData()]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Заметки"
-        tableView.reloadData()
+        
+        reloadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        reloadData()
+    }
+    
+    func reloadData() {
+        let fetchRequest: NSFetchRequest<NoteCoreData> = NoteCoreData.fetchRequest()
+        
+        do {
+            if let results = try contex?.fetch(fetchRequest) {
+                dataNotes = results
+            }
+        }
+        catch {
+            print("error.localizedDescription", error.localizedDescription)
+        }
         tableView.reloadData()
     }
     
+    func noteDate(date: Date?) -> String {
+        if date != nil {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "dd.MM.yyyy"
+            let result = formatter.string(from: date!)
+            return result
+        }
+        else {
+            return "No info"
+        }
+    }
+    
+    func noteTime(date: Date?) -> String {
+        if date != nil {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "HH:mm"
+            let result = formatter.string(from: date!)
+            return result
+        }
+        else {
+            return "No info"
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return arrayNotes.count
+        return dataNotes.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "noteCell", for: indexPath) as! NoteCell
-        cell.labelDate.text = arrayNotes[indexPath.row].date
-        cell.labelNote.text = arrayNotes[indexPath.row].note
-        cell.labelTime.text = arrayNotes[indexPath.row].time
-        cell.labelUnicode.text = ">"
         
-        //cell.textLabel?.text = arrayNotes[indexPath.row].note
-        //cell.detailTextLabel?.text = arrayNotes[indexPath.row].date + "     " + arrayNotes[indexPath.row].time
+        cell.labelDate.text = noteDate(date: dataNotes[indexPath.row].date)
+        cell.labelNote.text = dataNotes[indexPath.row].note
+        cell.labelTime.text = noteTime(date: dataNotes[indexPath.row].time)
+        cell.labelUnicode.text = ">"
         return cell
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 85
-        //81
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let note = arrayNotes[indexPath.row].note
+        let note = dataNotes[indexPath.row].note
         performSegue(withIdentifier: "showCreateAndDetailNote", sender: note)
     }
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let note = arrayNotes[indexPath.row]
+        let note = dataNotes[indexPath.row]
         let editAction = UITableViewRowAction(style: .default, title: "Edit") { (action, indexPath) in
             self.performSegue(withIdentifier: "showCreateAndDetailNote", sender: note)
         }
         let deleteAction = UITableViewRowAction(style: .default, title: "Delete") { (action, indexPath) in
-            arrayNotes.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .automatic)
+            self.dataNotes.remove(at: indexPath.row)
+            self.contex.delete(note)
+            
+            do {
+                try self.contex.save()
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+            } catch  {
+                print(error.localizedDescription)
+            }
         }
         editAction.backgroundColor = .blue
         deleteAction.backgroundColor = .red
@@ -63,6 +111,7 @@ class ViewController: UITableViewController {
     
     @IBAction func barButtonIntemAdd(_ sender: Any) {
         let showSaveNote = true
+        
         performSegue(withIdentifier: "showCreateAndDetailNote", sender: showSaveNote)
     }
     
@@ -71,11 +120,12 @@ class ViewController: UITableViewController {
             if let showCreateAndDetailNoteVC = segue.destination as? CreateAndDetailNoteVC {
                 if let senderShowSaveNote = sender as? Bool {
                     showCreateAndDetailNoteVC.showSaveNote = senderShowSaveNote
+                    showCreateAndDetailNoteVC.contex = contex
                 }
                 if let senderShowDetailNote = sender as? String {
                     showCreateAndDetailNoteVC.detailNote = senderShowDetailNote
                 }
-                if let senderShowEditNote = sender as? Note {
+                if let senderShowEditNote = sender as? NoteCoreData {
                     showCreateAndDetailNoteVC.note = senderShowEditNote
                     showCreateAndDetailNoteVC.showEditNote = true
                 }

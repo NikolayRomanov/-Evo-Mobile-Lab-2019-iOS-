@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import CoreData
 
 class CreateAndDetailNoteVC: UIViewController {
     
-    var note = Note()
+    var contex: NSManagedObjectContext!
+    var note = NoteCoreData()
     var showSaveNote = false
     var showEditNote = false
     var detailNote = String()
@@ -20,13 +22,7 @@ class CreateAndDetailNoteVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //createBarButtonSave()
         definitionVC()
-        //print("showSaveNote", showSaveNote)
-        //print("showEditNote", showEditNote)
-        //print("detailNote", note)
-        //print("count note", arrayNotes.count)
-        // Do any additional setup after loading the view.
     }
     
     func definitionVC() {
@@ -38,7 +34,6 @@ class CreateAndDetailNoteVC: UIViewController {
             textViewNote.text = note.note
             createBarButtonEdit()
             print("showEditNote")
-            print("showEditNote", note.note)
         }
         else {
             textViewNote.text = detailNote
@@ -60,34 +55,24 @@ class CreateAndDetailNoteVC: UIViewController {
                                          action: #selector(barButtonItemEdit))
         navigationItemNote.rightBarButtonItem = editButton
     }
-
-    func noteDate() -> String {
-        let date = Date()
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd.MM.yyyy"
-        let result = formatter.string(from: date)
-        return result
-    }
     
-    func noteTime() -> String {
-        let date = Date()
-        let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm"
-        let result = formatter.string(from: date)
-        return result
-    }
-    
-    func recordObject() -> Note {
-        note.date = noteDate()
-        note.time = noteTime()
+    func recordObject() {
+        let note = NoteCoreData(context: contex)
         note.note = textViewNote.text
-        return note
+        let date = Date()
+        note.date = date
+        note.time = date
+        
+        do {
+            try contex.save()
+        } catch  {
+            print(error.localizedDescription)
+        }
     }
     
     @objc func barButtonItemSave() {
         if showSaveNote {
-            arrayNotes.append(recordObject())
-            print(arrayTest.count)
+            recordObject()
             navigationItemNote.rightBarButtonItem?.title = "Готово"
             navigationItemNote.rightBarButtonItem?.isEnabled = false
         }
@@ -100,4 +85,5 @@ class CreateAndDetailNoteVC: UIViewController {
     @objc func barButtonItemEdit() {
         createBarButtonSave()
     }
+    
 }
