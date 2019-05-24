@@ -43,6 +43,7 @@ class ViewController: UITableViewController {
     
     func reloadData() {
         let fetchRequest: NSFetchRequest<NoteCoreData> = NoteCoreData.fetchRequest()
+        fetchRequest.fetchBatchSize = 20
         
         do {
             if let results = try contex?.fetch(fetchRequest) {
@@ -77,6 +78,37 @@ class ViewController: UITableViewController {
         else {
             return "No info"
         }
+    }
+    
+    func sortAlphabet() {
+        dataNotes.sort(){$0.note! < $1.note!}
+        tableView.reloadData()
+    }
+    
+    func sortDate() {
+        dataNotes.sort(by: { $0.date!.compare($1.date!) == .orderedDescending })
+        tableView.reloadData()
+    }
+    
+    func showActionSheet(controller: UIViewController) {
+        let alert = UIAlertController(title: "Сортировать", message: "Выберете пожалуйста желательную сортировку", preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "По алфавиту", style: .default, handler: { (_) in
+            print("По алфавиту")
+            self.sortAlphabet()
+        }))
+        
+        alert.addAction(UIAlertAction(title: "По дате", style: .default, handler: { (_) in
+            print("По дате")
+            self.sortDate()
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Отменить", style: .cancel, handler: { (_) in
+            print("Отменить")
+        }))
+        
+        self.present(alert, animated: true, completion: {
+            print("completion block")
+        })
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -132,11 +164,12 @@ class ViewController: UITableViewController {
         else {
             note = dataNotes[indexPath.row]
         }
+        
         let editAction = UITableViewRowAction(style: .default, title: "Edit") { (action, indexPath) in
             self.performSegue(withIdentifier: "showCreateAndDetailNote", sender: note)
         }
+        
         let deleteAction = UITableViewRowAction(style: .default, title: "Delete") { (action, indexPath) in
-            //self.dataNotes.remove(at: indexPath.row)
             if self.isFiltering {
                 self.filteredDataNotes.remove(at: indexPath.row)
             }
@@ -163,6 +196,10 @@ class ViewController: UITableViewController {
         performSegue(withIdentifier: "showCreateAndDetailNote", sender: showSaveNote)
     }
     
+    @IBAction func barButtonItemSort(_ sender: Any) {
+        showActionSheet(controller: self)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showCreateAndDetailNote" {
             if let showCreateAndDetailNoteVC = segue.destination as? CreateAndDetailNoteVC {
@@ -175,6 +212,7 @@ class ViewController: UITableViewController {
                 }
                 if let senderShowEditNote = sender as? NoteCoreData {
                     showCreateAndDetailNoteVC.note = senderShowEditNote
+                    showCreateAndDetailNoteVC.contex = contex
                     showCreateAndDetailNoteVC.showEditNote = true
                 }
             }
@@ -199,7 +237,5 @@ extension ViewController: UISearchResultsUpdating {
         })
         reloadData()
     }
-    
-    
 }
 

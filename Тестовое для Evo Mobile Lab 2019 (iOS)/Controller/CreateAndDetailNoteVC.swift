@@ -66,7 +66,19 @@ class CreateAndDetailNoteVC: UIViewController {
         do {
             try contex.save()
         } catch  {
-            print(error.localizedDescription)
+            print("error.localizedDescription", error.localizedDescription)
+        }
+    }
+    
+    func editObject() {
+        note.note = textViewNote.text
+        
+        if contex.hasChanges {
+            do {
+                try contex.save()
+            } catch {
+                print("error.localizedDescription", error.localizedDescription)
+            }
         }
     }
     
@@ -77,13 +89,18 @@ class CreateAndDetailNoteVC: UIViewController {
             navigationItemNote.rightBarButtonItem?.isEnabled = false
         }
         else if showEditNote {
-            note.note = textViewNote.text
+            editObject()
             createBarButtonEdit()
         }
     }
     
     @objc func barButtonItemEdit() {
         createBarButtonSave()
+    }
+    
+    @IBAction func barButtonItemShare(_ sender: Any) {
+        let activityController = UIActivityViewController(activityItems: [textViewNote.text], applicationActivities: nil)
+        present(activityController, animated: true, completion: nil)
     }
     
 }
