@@ -14,7 +14,6 @@
 		FAC285F42273022D008B74C6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAC285F22273022D008B74C6 /* Main.storyboard */; };
 		FAC285F62273022F008B74C6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAC285F52273022F008B74C6 /* Assets.xcassets */; };
 		FAC285F92273022F008B74C6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAC285F72273022F008B74C6 /* LaunchScreen.storyboard */; };
-		FAC286042273063C008B74C6 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC286032273063C008B74C6 /* Note.swift */; };
 		FAC2860822731EBB008B74C6 /* CreateAndDetailNoteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC2860722731EBB008B74C6 /* CreateAndDetailNoteVC.swift */; };
 		FAC2860B22735864008B74C6 /* NoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC2860A22735864008B74C6 /* NoteCell.swift */; };
 /* End PBXBuildFile section */
@@ -29,7 +28,6 @@
 		FAC285F52273022F008B74C6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FAC285F82273022F008B74C6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FAC285FA2273022F008B74C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FAC286032273063C008B74C6 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		FAC2860722731EBB008B74C6 /* CreateAndDetailNoteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAndDetailNoteVC.swift; sourceTree = "<group>"; };
 		FAC2860A22735864008B74C6 /* NoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -88,7 +86,6 @@
 		FAC2860222730590008B74C6 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				FAC286032273063C008B74C6 /* Note.swift */,
 				FA47FF3B22798510003E8B2D /* CoreDataStack.swift */,
 				FA47FF3D2279873F003E8B2D /* NoteCoreData.xcdatamodeld */,
 			);
@@ -180,7 +177,6 @@
 				FA47FF3C22798510003E8B2D /* CoreDataStack.swift in Sources */,
 				FA47FF3F22798740003E8B2D /* NoteCoreData.xcdatamodeld in Sources */,
 				FAC285EF2273022D008B74C6 /* AppDelegate.swift in Sources */,
-				FAC286042273063C008B74C6 /* Note.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
